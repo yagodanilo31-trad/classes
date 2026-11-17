@@ -1,0 +1,38 @@
+class weapon:
+    def __init__(self, name, damage):
+        self.name = name
+        self.damage = damage
+    
+    def weapon_damage(self):
+        return self.damage
+
+class character:
+    def __init__(self, name, health, damage):
+        self.name = name
+        self.health = health
+        self.damage = damage
+        self.arm = None
+    
+    def equipped(self, arm):
+        self.arm = arm
+    
+    def attack(self):
+        total_damage = self.damage
+        if self.arm:
+            total_damage += self.arm.weapon_damage()
+            return total_damage
+        else:
+            return total_damage
+
+#weapon class
+axe = weapon("balarck", 45)
+sword = weapon("lion", 20)
+warrior = character("Yago", 100, 5)
+assassin = character("Yago", 50, 10)
+
+#character class
+warrior.equipped(axe)
+
+#try
+print(assassin.attack())
+print(warrior.attack())
