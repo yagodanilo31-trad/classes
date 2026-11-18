@@ -1,38 +1,63 @@
 class weapon:
-    def __init__(self, name, damage):
+    def __init__(self, name, damage = int, id = 1):
         self.name = name
         self.damage = damage
+        self.id = id
     
     def weapon_damage(self):
         return self.damage
 
+class armor:
+    def __init__(self, name, defense = int, id = 2):
+        self.name = name
+        self.defense = defense
+        self.id = id
+    
+    def reduce_damage(self):
+        return self.defense
+
 class character:
-    def __init__(self, name, health, damage):
+    def __init__(self, name, health = int, defense = int,damage = int):
         self.name = name
         self.health = health
+        self.defense = defense
         self.damage = damage
-        self.arm = None
+        self.weapon = None
+        self.armor = None
     
-    def equipped(self, arm):
-        self.arm = arm
-    
+    def equipped(self, weapon, armor):
+        self.weapon = weapon
+        self.armor = armor
+
     def attack(self):
         total_damage = self.damage
-        if self.arm:
-            total_damage += self.arm.weapon_damage()
+        if self.weapon:
+            total_damage += self.weapon.weapon_damage()
             return total_damage
         else:
             return total_damage
+    
+    def reduce(self):
+        total_reduce = self.defense
+        if self.armor:
+            total_reduce += self.armor.reduce_damage()
+            return total_reduce
+        else:
+            return total_reduce
+
 
 #weapon class
 axe = weapon("balarck", 45)
 sword = weapon("lion", 20)
-warrior = character("Yago", 100, 5)
-assassin = character("Yago", 50, 10)
+
+#armor class
+helmet = armor("bonk", 12)
 
 #character class
-warrior.equipped(axe)
+warrior = character("Yago", 100, 10, 5)
+assassin = character("Yago", 50, 0, 10)
 
-#try
-print(assassin.attack())
-print(warrior.attack())
+#equip item
+warrior.equipped(axe, helmet)
+print(f"{warrior.name} hit {warrior.attack()} damage!")
+print(f"{warrior.reduce()}")
